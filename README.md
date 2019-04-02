@@ -1,5 +1,5 @@
 # PracticeForCompetitiveProgramming
-競技プログラミングへの練習記録です
+競技プログラミングの練習記録です
 
 # AtCoder
 ## C
