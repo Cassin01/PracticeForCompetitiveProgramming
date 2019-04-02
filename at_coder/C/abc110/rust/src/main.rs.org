@@ -1,0 +1,62 @@
+use std::collections::HashMap;
+fn main() {
+    let mut s1 = {
+        let mut s = String::new();
+        std::io::stdin().read_line(&mut s).unwrap();
+        s.trim_right().to_owned()
+    };
+
+    let mut s2 = {
+        let mut s = String::new();
+        std::io::stdin().read_line(&mut s).unwrap();
+        s.trim_right().to_owned()
+    };
+
+    let mut map1: HashMap<char, Vec<i32>> = HashMap::new();
+    let mut map2: HashMap<char, Vec<i32>> = HashMap::new();
+    for i in 0..26 {
+        map1.insert((i + b'a') as char, Vec::new());
+        map2.insert((i + b'a') as char, Vec::new());
+    }
+
+    let mut vs1 = Vec::new();
+    let mut vs2 = Vec::new();
+
+    while let Some(c1) = s1.pop() {
+        if let Some(c2) = s2.pop() {
+            vs1.push(c1);
+            vs2.push(c2);
+        }
+    }
+
+
+    for i in 0..vs1.len() {
+        if vs1[i] != vs2[i] {
+            let tmp_vc1 = vs1[i].clone();
+            let tmp_vc2 = vs2[i].clone();
+            let mut remaind_vc1 = Vec::new();
+            let mut remaind_vc2 = Vec::new();
+            for j in 0..vs1.len() {
+                if vs1[j] == tmp_vc1 {
+                    remaind_vc1.push(j.clone());
+                } else if vs1[j] == tmp_vc2 {
+                    remaind_vc2.push(j.clone());
+                }
+            }
+            for rv in remaind_vc1 {
+                vs1[rv] = tmp_vc2.clone();
+            }
+            for rv in remaind_vc2 {
+                vs1[rv] = tmp_vc1.clone();
+            }
+            //println!("{:?}", vs1);
+            //println!("{:?}", vs2);
+        }
+    }
+
+    if vs1 == vs2 {
+        println!("Yes");
+    } else {
+        println!("No");
+    }
+}
