@@ -13,7 +13,6 @@ fn main() {
         s.trim_right().to_owned()
     };
 
-
     let mut map1: HashMap<char, Vec<usize>> = HashMap::new();
     let mut map2: HashMap<char, Vec<usize>> = HashMap::new();
     for i in 0..26 {
