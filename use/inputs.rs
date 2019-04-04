@@ -25,7 +25,7 @@ fn main() {
     let vs: Vec<u32> = {
             let mut ws = s.split_whitespace(); // 空白区切りの単語に分解する
             let mut vs = Vec::new();
-            for _ in 0..n {
+            for _ in 0..u {
                 vs.push(ws.next().unwrap().parse().unwrap());
             }
             vs
