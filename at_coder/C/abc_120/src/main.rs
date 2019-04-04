@@ -25,5 +25,5 @@ fn main() {
             o+=1;
         }
     }
-    println!("{}", if o < z { o } else { z }* 2);
+    println!("{}", if o < z { o } else { z } * 2);
 }
