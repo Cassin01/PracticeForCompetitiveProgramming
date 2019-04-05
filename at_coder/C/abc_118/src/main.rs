@@ -102,7 +102,6 @@ fn main() {
             let tmp = min2_index;
             min2_index = min_index;
             min_index = tmp;
-        } else {
         }
     }
 }
