@@ -50,16 +50,20 @@ macro_rules! read_value {
 fn main() {
     input! {
         n: usize,
-        q: usize,
-        s: chars,
-        lrs: [(usize1, usize1); q],
+        abcs: [usize; 3],
+        ls: [usize; n]
     }
-    let mut inc_list = vec![0; s.len()];
-    for s_index in 1..s.len() {
-        inc_list[s_index] = inc_list[s_index - 1] +
-            if s[s_index - 1] == 'A' && s[s_index] == 'C' { 1 } else { 0 }
-    }
-    for lr in lrs {
-        println!("{}", inc_list[lr.1] - inc_list[lr.0]);
+    // ls , abs(ls - abc[x])
+    let mut ls_info = Vec::new();
+    for abc in ls.iter() {
+        let mut table = Vec::new();
+        for j in abcs.iter() {
+            table.push((j.clone() as i64 - abc.clone() as i64).abs() as usize );
+        }
+        table.sort();
+        ls_info.push(table);
+    };
+    for ne in ls_info {
+        println!("{:?}", ne);
     }
 }
