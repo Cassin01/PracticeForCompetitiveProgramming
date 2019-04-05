@@ -25,5 +25,24 @@ void calc(vector<char> v) {
   }
   if (cnta == 0 || cntb == 0 || cntc == 0) return;
   mp += abs(A - cnta) + abs(B - cntb) + abs(C - cntc);
-  rtn = min(rtn, mp)l
+  rtn = min(rtn, mp);
+}
+
+void dfs(int depth, vector<char> v) {
+  if (depth > N) {
+    calc(v);
+    return;
+  }
+  for (int i = 0; i < 4; i++) {
+    v[depth] = 'A' + i;
+    dfs(depth + 1, v);
+  }
+}
+
+int main(void) {
+  cin >> N >> A >> B >> C;
+  for (int i = 1; i <= N; i++ ) cin >> l[i];
+  vector<char> v(N+1, '0');
+  dfs(1, v);
+  cout << rtn << endl;
 }
