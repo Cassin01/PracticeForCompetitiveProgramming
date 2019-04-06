@@ -138,6 +138,12 @@ c++ のlower_bound, upper_bound関数を知った
 ### abc 115
   同 / 1m
 
+## B
+
+### abc118
+  2019 / 4 / 6 / Rust / AC
+
+  次から時間測ろう
 
 ## EducationalDPContest
   2019 / 4 / 6 / C++
