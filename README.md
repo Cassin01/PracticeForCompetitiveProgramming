@@ -140,6 +140,7 @@ c++ のlower_bound, upper_bound関数を知った
 
 
 ## EducationalDPContest
+  2019 / 4 / 6 / C++
 
 ### A Frog1
   １次元DP
