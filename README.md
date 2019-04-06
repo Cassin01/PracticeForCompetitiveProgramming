@@ -149,7 +149,7 @@ c++ のlower_bound, upper_bound関数を知った
   簡単
 
 ### C Vacation
-    典型的なDP
+  典型的なDP
 
 ### D
   ナップザック問題
