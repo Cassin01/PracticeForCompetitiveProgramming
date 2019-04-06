@@ -145,6 +145,18 @@ c++ のlower_bound, upper_bound関数を知った
 
   次から時間測ろう
 
+### abc119
+    2019 / 4 / 7 / Rust / AC
+
+    問題理解するスピードをあげよう
+
+### abc116
+    2019 / 4 / 7 / Rust / AC
+
+    全探索でTLEかと思ったけど許してくれた
+
+    Bは割と全探索で許してくれる
+
 ## EducationalDPContest
   2019 / 4 / 6 / C++
 

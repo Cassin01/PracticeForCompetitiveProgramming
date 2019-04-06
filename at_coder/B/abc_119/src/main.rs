@@ -50,22 +50,15 @@ macro_rules! read_value {
 fn main() {
     input! {
         n: usize,
-        l: [usize; n],
+        xu: [(f64, String); n],
     }
-
-    for i in 0..n {
-        let mut sum = 0;
-        for j in 0..n {
-            if i == j {
-                continue;
-            } else {
-                sum+=l[j];
-            }
-        }
-        if sum <= l[i] {
-            println!("No");
-            return;
+    let mut sum: f64 = 0.0;
+    for v in xu {
+        if v.1 == "JPY".to_string() {
+            sum += v.0;
+        } else {
+            sum += v.0 * 380000.0;
         }
     }
-    println!("Yes");
+    println!("{}", sum);
 }

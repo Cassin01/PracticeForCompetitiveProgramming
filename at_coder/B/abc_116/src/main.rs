@@ -47,25 +47,28 @@ macro_rules! read_value {
     };
 }
 
+fn ff(n: usize) -> usize {
+    if n % 2 == 0 {
+        return n / 2;
+    } else {
+        return 3 * n + 1;
+    }
+}
+
 fn main() {
     input! {
-        n: usize,
-        l: [usize; n],
+        s: usize,
     }
 
-    for i in 0..n {
-        let mut sum = 0;
-        for j in 0..n {
-            if i == j {
-                continue;
-            } else {
-                sum+=l[j];
+    let mut a = vec![0; 1000100];
+    a[1] = s;
+    for i in 2..1000100 {
+        a[i] = ff(a[i-1]);
+        for j in 1..i {
+            if a[i] == a[j] {
+                println!("{}", i);
+                return;
             }
         }
-        if sum <= l[i] {
-            println!("No");
-            return;
-        }
     }
-    println!("Yes");
 }
