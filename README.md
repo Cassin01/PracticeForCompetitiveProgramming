@@ -11,8 +11,7 @@
   結果 : エラーが取れなかった
 
   自作のクラスオブジェクトをvectorに入れようとしたがエラー解決できず
-
-  c++ のlower_bound, upper_bound関数を知った
+c++ のlower_bound, upper_bound関数を知った
 
 ### abc110
   2019 / 4 / 2
@@ -138,3 +137,21 @@
 
 ### abc 115
   同 / 1m
+
+
+## EducationalDPContest
+
+### A Frog1
+  １次元DP
+
+### B Frog2
+  簡単
+
+### C Vacation
+    典型的なDP
+
+### D
+  ナップザック問題
+
+### E
+  dpテーブルが大きい時は最小値をとる
