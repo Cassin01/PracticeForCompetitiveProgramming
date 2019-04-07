@@ -1,4 +1,7 @@
 # PracticeForCompetitiveProgramming
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/da6cb7e994a04b8d8d7b76b6094aadb7)](https://www.codacy.com/app/Cassin01/PracticeForCompetitiveProgramming?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Cassin01/PracticeForCompetitiveProgramming&amp;utm_campaign=Badge_Grade)
+
 競技プログラミングの練習記録です
 
 # AtCoder
