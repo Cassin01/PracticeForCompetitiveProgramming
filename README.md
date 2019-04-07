@@ -165,6 +165,16 @@ c++ のlower_bound, upper_bound関数を知った
 
   文字列操作慣れていきたい
 
+### abc110
+  2019 / 4 / 8 / Rust / AC
+
+### abc109
+  2019 / 4 / 8 / Rust / AC
+
+  技覚えましょう
+
+### abc108
+  2019 / 4 / 8 / Rust / AC
 
 ## EducationalDPContest
   2019 / 4 / 6 / C++
