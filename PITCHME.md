@@ -182,6 +182,15 @@ c++ のlower_bound, upper_bound関数を知った
 ### abc107
   2019 / 4 / 8 / Rust / AC
 
+### abc106
+  2019 / 4 / 8 / Rust / AC
+
+### abc105
+  2019 / 4 / 8 / Rust / AC
+
+### abc104
+  2019 / 4 / 8 / Rust / AC
+
 ## EducationalDPContest
   2019 / 4 / 6 / C++
 
