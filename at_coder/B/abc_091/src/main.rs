@@ -47,22 +47,34 @@ macro_rules! read_value {
     };
 }
 
+use std::collections::HashMap;
 fn main() {
     input! {
         n: usize,
-        d: usize,
-        x: usize,
-        a: [usize; n],
+        s: [String; n],
+        m: usize,
+        t: [String; m],
     }
-    let mut time  = 0;
-    for i in 0..n {
-        for j in 0..120 {
-            if a[i] * j + 1 > d {
-                break;
-            } else {
-                time+=1;
+    let mut d = s.iter().map(|c| (c, 0)).collect::<HashMap<_, _>>();
+    for i in 0..s.len() {
+        //d[&s[i]]+=1;
+        if let Some(x) = d.get_mut(&s[i]) {
+            *x += 1;
+        }
+    }
+    for j in 0..t.len() {
+        if d.contains_key(&t[j]) {
+            //d[&t[i]]-=1;
+            if let Some(x) = d.get_mut(&t[j]) {
+                *x -= 1;
             }
         }
     }
-    println!("{}", time + x);
+    let mut max = 0;
+    for (_, &v) in d.iter() {
+        if max <= v {
+            max = v;
+        }
+    }
+    println!("{}", max);
 }
