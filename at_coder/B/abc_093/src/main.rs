@@ -46,18 +46,19 @@ macro_rules! read_value {
         $iter.next().unwrap().parse::<$t>().expect("Parse error")
     };
 }
-
 fn main() {
     input! {
-        a: i64,
-        b: i64,
+        a: usize,
+        b: usize,
+        k: usize,
     }
-
-    let h = b - a;
-    let mut j = 0;
-    for i in 1..h + 1{
-        j+=i;
+    let mut time = 0;
+    for i in a..b+1 {
+        time+=1;
+        if time <= k {
+            println!("{}", i);
+        } else if time >= b - a - k + 2 {
+            println!("{}", i);
+        }
     }
-
-    println!("{}", j - b);
 }

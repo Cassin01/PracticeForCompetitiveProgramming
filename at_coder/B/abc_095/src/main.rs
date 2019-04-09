@@ -49,15 +49,13 @@ macro_rules! read_value {
 
 fn main() {
     input! {
-        a: i64,
-        b: i64,
+        n: i64,
+        x: i64,
+        m: [i64; n],
     }
 
-    let h = b - a;
-    let mut j = 0;
-    for i in 1..h + 1{
-        j+=i;
+    let need: i64 = m.iter().sum();
+    if let Some(minm) = m.iter().min() {
+        println!("{}", (x - need) / minm + n);
     }
-
-    println!("{}", j - b);
 }

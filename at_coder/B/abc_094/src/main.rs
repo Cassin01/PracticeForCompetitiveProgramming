@@ -49,15 +49,20 @@ macro_rules! read_value {
 
 fn main() {
     input! {
-        a: i64,
-        b: i64,
+        _n: i64,
+        m: i64,
+        x: i64,
+        a: [i64; m],
     }
-
-    let h = b - a;
-    let mut j = 0;
-    for i in 1..h + 1{
-        j+=i;
+    for i in 0..a.len() {
+        if a[i] > x {
+            if i + 1 > a.len() - (i + 1) {
+                println!("{}", a.len()-i);
+                return;
+            } else {
+                println!("{}", i);
+                return;
+            }
+        }
     }
-
-    println!("{}", j - b);
 }

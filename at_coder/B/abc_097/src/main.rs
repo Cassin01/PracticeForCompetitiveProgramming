@@ -49,15 +49,18 @@ macro_rules! read_value {
 
 fn main() {
     input! {
-        a: i64,
-        b: i64,
+        x: i64,
     }
-
-    let h = b - a;
-    let mut j = 0;
-    for i in 1..h + 1{
-        j+=i;
+    let mut max = 0;
+    for i in 1i64..40 {
+        for j in 2u32..10 {
+            let p = i.pow(j);
+            if p <= x {
+                if max <= p {
+                    max = p;
+                }
+            }
+        }
     }
-
-    println!("{}", j - b);
+    println!("{}", max);
 }

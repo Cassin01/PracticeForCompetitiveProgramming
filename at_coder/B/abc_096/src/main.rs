@@ -46,18 +46,25 @@ macro_rules! read_value {
         $iter.next().unwrap().parse::<$t>().expect("Parse error")
     };
 }
+fn maxi(vs: Vec<u32>) -> (usize, u32) {
+    let mut max = (0, 0);
+    for (i, v) in vs.iter().enumerate() {
+        if v > &max.1 {
+            max = (i, *v);
+        }
+    }
+    max
+}
 
 fn main() {
     input! {
-        a: i64,
-        b: i64,
+        a: u32,
+        b: u32,
+        c: u32,
+        k: u32,
     }
-
-    let h = b - a;
-    let mut j = 0;
-    for i in 1..h + 1{
-        j+=i;
-    }
-
-    println!("{}", j - b);
+    let mut v = vec![a, b, c];
+    let (i, _) = maxi(v.clone());
+    v[i] *= 2_u32.pow(k);
+    println!("{}", v.iter().sum::<u32>());
 }
