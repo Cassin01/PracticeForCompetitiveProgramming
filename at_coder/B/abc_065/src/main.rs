@@ -49,20 +49,26 @@ macro_rules! read_value {
 fn main() {
     input! {
         n: usize,
+        a: [usize1; n],
     }
-    let mut max = 0;
-    let mut d = 0;
-    for i in 1..n + 1 {
-        let mut s = i;
-        let mut time = 1;
-        while s % 2 == 0 && s != 0 {
+    let mut aa = a.into_iter().map(|a| (a, true)).collect::<Vec<(usize, bool)>>();
+    let mut now = 0;
+    let mut time = 0;
+    loop {
+        let nowb = now;
+        now = aa[now].0.clone();
+        if nowb == now {
+            println!("-1");
+            return;
+        } else if aa[now].1 == false {
+            println!("-1");
+            return;
+        } else if now == 1 {
+            println!("{}", time + 1);
+            return;
+        } else {
+            aa[now].1 = false;
             time+=1;
-            s /= 2;
-        }
-        if max < time {
-            max = time;
-            d = i;
         }
     }
-    println!("{}", d);
 }

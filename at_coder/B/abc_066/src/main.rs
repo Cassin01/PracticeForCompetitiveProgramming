@@ -46,23 +46,37 @@ macro_rules! read_value {
         $iter.next().unwrap().parse::<$t>().expect("Parse error")
     };
 }
+
+fn ch(s: &String, r: &String) -> bool {
+    if s == r {
+        true
+    } else {
+        false
+    }
+}
 fn main() {
     input! {
-        n: usize,
+        s: chars,
     }
-    let mut max = 0;
-    let mut d = 0;
-    for i in 1..n + 1 {
-        let mut s = i;
-        let mut time = 1;
-        while s % 2 == 0 && s != 0 {
-            time+=1;
-            s /= 2;
+    let mut s = s;
+    s.pop();
+    s.pop();
+    while !s.is_empty() {
+        let mut f = String::new();
+        let mut b = String::new();
+        for j in 0..s.len() / 2 {
+            f.push(s[j].clone());
         }
-        if max < time {
-            max = time;
-            d = i;
+        for j in s.len() / 2 ..s.len() {
+            b.push(s[j].clone());
+        }
+        if ch(&f, &b) {
+            println!("{}", s.len());
+            return;
+        } else {
+            s.pop();
+            s.pop();
         }
     }
-    println!("{}", d);
+    println!("{}", 0);
 }

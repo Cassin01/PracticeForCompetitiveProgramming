@@ -49,20 +49,15 @@ macro_rules! read_value {
 fn main() {
     input! {
         n: usize,
+        k: usize,
+        l: [usize; n],
     }
-    let mut max = 0;
-    let mut d = 0;
-    for i in 1..n + 1 {
-        let mut s = i;
-        let mut time = 1;
-        while s % 2 == 0 && s != 0 {
-            time+=1;
-            s /= 2;
-        }
-        if max < time {
-            max = time;
-            d = i;
-        }
+    let mut l = l;
+    l.sort();
+    l.reverse();
+    let mut m = 0;
+    for i in 0..k {
+        m+=l[i];
     }
-    println!("{}", d);
+    println!("{}", m);
 }
