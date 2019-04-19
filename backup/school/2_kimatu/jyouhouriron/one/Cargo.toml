@@ -1,0 +1,7 @@
+[package]
+name = "one"
+version = "0.1.0"
+authors = ["Cassin01 <koyojb@gmail.com>"]
+
+[dependencies]
+ndarray = "0.12.1"

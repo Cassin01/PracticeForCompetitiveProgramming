@@ -1,0 +1,65 @@
+\documentclass[a4paper, 12pt]{jarticle}
+\usepackage{array}
+\usepackage[deluxe]{otf}
+\usepackage{multirow}
+\usepackage{multicol}
+\newcommand{\uu}[1]{\underline{ \textbf{#1}}}
+
+\newcommand{\xx}[1]{\textbf{#1}}
+\begin{document}
+\begin{center}
+学籍番号: \underline{4617043},
+名前: \underline{神保光洋}
+\end{center}
+
+以下の表は, 東京理科大学工学部情報工学科の２年生向けに開講されている情報工学実験Iのスケジュールを、\LaTeX により作成したものである. 作成のためには, 以下のスタイルファイルをusepackageするとよい.
+
+\begin{itemize}
+    \item array.sty
+    \item otf.sty (ただし, deluxeオプションをつける)
+    \item multirow.sty
+    \item multicolumn.sty
+\end{itemize}
+
+\[
+\begin{array}{|c||c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    実験日 & \xx{G1} & \xx{G2} & \xx{G3} & \xx{G4} & \xx{G5} & \xx{G6} & \xx{G7} & \xx{G8} & \xx{G9} & \xx{G10} & \xx{G11} & \xx{G12} \\
+
+    \hline
+    \hline
+
+    4 月 15 日 & \multicolumn{12}{c|}{ガイダンス,  $\LaTeX$ 演習(\underline{0})} \\
+    \hline
+    \hline
+    実験日 & \xx{G1} & \xx{G2} & \xx{G3} & \xx{G4} & \xx{G5} & \xx{G6} & \xx{G7} & \xx{G8} & \xx{G9} & \xx{G10} & \xx{G11} & \xx{G12} \\ \hline
+    4 月 22 日 & \multirow{3}{*}{\uu{2}} & \multirow{3}{*}{\uu{2}} & \multirow{3}{*}{\uu{2}} & \multirow{3}{*}{\uu{3}} & \multirow{3}{*}{\uu{3}} & \multirow{3}{*}{\uu{3}}
+                & \multirow{2}{*}{\uu{1}} & \multirow{2}{*}{\uu{1}} & \multirow{2}{*}{\uu{5}} & \multirow{2}{*}{\uu{5}} & \multirow{2}{*}{\uu{4}} & \multirow{2}{*}{\uu{4}} \\
+    5 月 06 日 & & & & & & & & & & & & \\ \cline{8-13}
+    5 月 13 日 & & & & & & & \multirow{2}{*}{\uu{4}} & \multirow{2}{*}{\uu{4}} & \multirow{2}{*}{\uu{1}} & \multirow{2}{*}{\uu{1}} & \multirow{2}{*}{\uu{5}} & \multirow{2}{*}{\uu{5}} \\ \cline{1-7}
+
+    5 月 20 日 & \multirow{3}{*}{\uu{3}} & \multirow{3}{*}{\uu{3}} & \multirow{3}{*}{\uu{3}} & \multirow{3}{*}{\uu{2}} & \multirow{3}{*}{\uu{2}} & \multirow{3}{*}{\uu{2}}
+                & & & & & & \\ \cline{8-13}
+    5 月 27 日 & & & & & & & \multirow{2}{*}{\uu{5}} & \multirow{2}{*}{\uu{5}} & \multirow{2}{*}{\uu{4}} & \multirow{2}{*}{\uu{4}} & \multirow{2}{*}{\uu{1}} & \multirow{2}{*}{\uu{1}} \\
+    5 月 03 日 & & & & & & & & & & & & \\ \hline \hline
+
+    6 月 10 日 & \multirow{2}{*}{\uu{1}} & \multirow{2}{*}{\uu{1}} & \multirow{2}{*}{\uu{5}} & \multirow{2}{*}{\uu{5}} & \multirow{2}{*}{\uu{4}} & \multirow{2}{*}{\uu{4}}
+                & \multirow{3}{*}{\uu{1}} & \multirow{3}{*}{\uu{1}} & \multirow{3}{*}{\uu{2}} & \multirow{3}{*}{\uu{2}} & \multirow{3}{*}{\uu{3}} & \multirow{3}{*}{\uu{3}} \\
+    6 月 17 日 & & & & & & & & & & & & \\ \cline{1-7}
+
+    6 月 24 日 & \multirow{2}{*}{\uu{4}} & \multirow{2}{*}{\uu{4}} & \multirow{2}{*}{\uu{1}} & \multirow{2}{*}{\uu{1}} & \multirow{2}{*}{\uu{5}} & \multirow{2}{*}{\uu{5}} & & & & & & \\ \cline{8-13}
+    6 月 01 日 & & & & & &
+            & \multirow{3}{*}{\uu{3}} & \multirow{3}{*}{\uu{3}} & \multirow{3}{*}{\uu{3}} & \multirow{3}{*}{\uu{2}} & \multirow{3}{*}{\uu{2}} & \multirow{3}{*}{\uu{2}} \\ \cline{1-7}
+
+    6 月 08 日 & \multirow{2}{*}{\uu{5}} & \multirow{2}{*}{\uu{5}} & \multirow{2}{*}{\uu{4}} & \multirow{2}{*}{\uu{4}} & \multirow{2}{*}{\uu{1}} & \multirow{2}{*}{\uu{1}} & & & & & & \\
+    6 月 15 日 & & & & & & & & & & & & \\ \hline \hline
+    7 月 22 日 & \multicolumn{12}{c|}{予備日} \\ \hline
+
+\end{array}
+\]
+
+\begin{flushright}
+    (注) 表中の下線付数字は課題番号である.
+\end{flushright}
+
+\end{document}

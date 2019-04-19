@@ -1,0 +1,190 @@
+\documentclass[12pt]{jarticle}
+\setlength{\textwidth}{170mm}
+\setlength{\textheight}{260mm}
+\setlength{\oddsidemargin}{-5mm}
+\setlength{\topmargin}{-25mm}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{ascmac}
+
+\begin{document}
+\begin{center}
+  学籍番号: 4617041 氏名: 白江涼雅
+\end{center}
+
+{\LARGE 課題１ C言語による乱数発生}
+
+\section{目的}
+C言語の乱数発生手段であるrand()関数とMersenne Twister(MT)を用いて、それぞれについて理解を深める。
+
+\section{実験装置}
+\begin{itemize}
+ \item windows Xシリーズ
+ \item Visualstdio2013
+\end{itemize}
+ 
+\section{結果}
+以下のになる。また、最後のページに図をまとめた.
+\begin{center}
+  \textbf{表１:100万回試行 誤り確率 $\epsilon$ $10^{-5}$から$10^{-4}$の時のビット誤り率$P_e$}
+  \begin{tabular}{|c|c|c|} \hline
+    誤り確率$\epsilon$ & rand関数の$P_e$ & MTの$P_e$ \\ \hline
+    0.00001          & 0.000032       & 0.000011  \\ \hline
+    0.00002          & 0.000031       & 0.000021  \\ \hline
+    0.00003          & 0.000028       & 0.000032  \\ \hline
+    0.00004          & 0.000065       & 0.000041  \\ \hline
+    0.00005          & 0.000062       & 0.000048  \\ \hline
+    0.00006          & 0.000056       & 0.000052  \\ \hline
+    0.00007          & 0.000096       & 0.000069  \\ \hline
+    0.00008          & 0.000095       & 0.000080  \\ \hline
+    0.00009          & 0.000085       & 0.000091  \\ \hline
+    0.00010          & 0.000123       & 0.000104  \\ \hline
+  \end{tabular}
+\end{center}
+
+\begin{center}
+  \textbf{表2:100万回試行 誤り確率 $\epsilon$ $10^{-3}$から$10^{-2}$の時のビット誤り率$P_e$}
+  \begin{tabular}{|c|c|c|} \hline
+    誤り確率$\epsilon$ & rand関数の$P_e$ & MTの$P_e$ \\ \hline
+    0.001         & 0.000978        & 0.000987  \\ \hline
+    0.002         & 0.002031        & 0.001971  \\ \hline
+    0.003         & 0.003037        & 0.003001  \\ \hline
+    0.004         & 0.004000        & 0.003998  \\ \hline
+    0.005         & 0.004988        & 0.004965  \\ \hline
+    0.006         & 0.005960        & 0.006013  \\ \hline
+    0.007         & 0.007015        & 0.006955  \\ \hline
+    0.008         & 0.008024        & 0.008059  \\ \hline
+    0.009         & 0.009036        & 0.009045  \\ \hline
+    0.010         & 0.009936        & 0.010098  \\ \hline        
+  \end{tabular}
+\end{center}
+
+\section{検討事項}
+\begin{enumerate}
+\item BERと理論値がほぼ同じ値になるにはrand関数は周期があり、2147483648回行えば良いと考えられる。そのことについては検討事項3でしめす.
+
+\item　表１、２をみてわかる通りrand関数を使った場合に顕著に現れるが、$\epsilon$の値が理論値から大きく外れる.検討事項3で示すが、精度の悪い乱数を使うと周期がでてきてしまうため良い値にならなかった.
+  
+\item
+  \begin{itemize}
+  \item rand関数について \\
+    rand関数のコードを確認した結果以下のように書かれていることがわかった.
+    \begin{center}
+      \begin{screen}
+\begin{verbatim}
+static long x=1;
+void srand(long s){ x=s; }
+long rand() { x=x*1103415245+12345; return x%2147483647; }
+\end{verbatim}
+      \end{screen}
+      \textbf{図1:UNIX系rand関数のソースコード}
+    \end{center}
+    
+   これからわかる通り、擬似乱数列の生成式の線形合同法を利用していることがわかる。記憶領域を必要とせず低機能なPCでも動作するメリットがあるが規則的に分布してしまうという特性がある.そして、$2^{31}=2147483647$で割ったあまりを出力しているため$2^{31}$周期とわかる.つまり多く試行を重ねるたびにい乱数として扱うことは難しくなってくる。以上の理由から精度の悪い乱数とされている。
+  \item　メルセンヌ・ツイスタについて\\
+    このコードを私の実力では読むことができなかったため、調べた内容で示す。メルセンヌ・ツイスタは$2^{19937}-1$の周期であるため現実的には周期がないと思ってよく、試行回数を常識の範囲内で多く増やしたとしても乱数として扱える。
+  \item
+    以上のことから検討事項1,2のような結果になった.
+  \end{itemize}
+\end{enumerate}
+
+\section{ソースコード}
+より一般的に読めるように、defineの部分は省いた.
+\begin{center}  
+\begin{screen}
+\begin{verbatim}
+#include <stdio.h>
+#include <stdlib.h>
+int main(){
+	int miss_count;
+	int Transmission[K],Reception[K],nouse[K];
+	double ran;
+	int i,j,k;
+	double delta = 0;
+	srand((unsigned)41);
+for (k = 1; k < probability; k++){
+		miss_count = 0;
+		delta = delta + delta_plus;
+		for (j = 0; j < SIM; j++){
+			//乱数４つ生成:送るデータのやつ
+			for (i = 0; i < K; i++){
+				ran = (double)rand() / RAND_MAX;
+				if (ran < 0.5){Transmission[i] = 0;}else{Transmission[i] = 1;}
+                        }
+			//雑音の乱数４つ
+			for (i = 0; i < K; i++){
+				ran = (double)rand() / RAND_MAX;
+				if (ran < delta){noise[i] = 1;}else{noise[i] = 0;}
+			}
+
+			//送られてくるデータ
+			for (i = 0; i < K; i++){
+				if (noise[i] == 0){Reception[i] = Transmission[i];}else{
+					Reception[i]=abs(Transmission[i]-1);
+				}if (Reception[i] != Transmission[i]){
+					miss_count++;
+				}
+			}
+		}
+		printf("deltaが%fのときのビット誤り率は%f\n", 
+delta, (double)miss_count / (double)(K * SIM));
+	}
+	return 0;
+}
+
+\end{verbatim}
+\end{screen}
+\textbf{図2:rand関数を使った時のソースコード}
+\end{center}
+
+\begin{center}  
+\begin{screen}
+\begin{verbatim}
+#include <stdio.h>
+#include <stdlib.h>
+int main(){
+	int miss_count;
+	int Transmission[K],Reception[K],noise[K];
+	double ran;
+	int i,j,k;
+	double delta = 0;
+	std::mt19937 mt(100);
+	std::uniform_real_distribution<double> r_rand(0.0, 1.0);
+
+	for (k = 1; k < probability; k++){
+		miss_count = 0;
+		delta = delta + delta_plus;
+		for (j = 0; j < SIM; j++){
+			//乱数４つ生成:送るデータのやつ
+			for (i = 0; i < K; i++){
+				ran = r_rand(mt);
+				if (ran < 0.5){Transmission[i] = 0;}else{Transmission[i] = 1;}
+			}
+			//雑音の乱数４つ
+			for (i = 0; i < K; i++){
+				ran = r_rand(mt);
+				if (ran < delta){noise[i] = 1;}else{noise[i] = 0;}
+			}
+
+			//送られてくるデータ
+			for (i = 0; i < K; i++){
+				if (noise[i] == 0)
+{Reception[i]=Transmission[i];}else{Reception[i] = abs(Transmission[i]-1);}
+				if (Reception[i] != Transmission[i]){miss_count++;}
+			}
+		}
+		printf("deltaが%fのときのビット誤り率は%f\n",
+ delta, (double)miss_count / (double)(K * SIM));
+	}
+	return 0;
+}
+\end{verbatim}
+\end{screen}
+\textbf{図3:mtを使った時のソースコード}
+\end{center}
+
+\section{参考文献}
+\begin{thebibliography}{2}
+\bibitem{}  「良い関数、悪い関数」 www001.upp.so-net.ne.jp
+  \end{thebibliography}
+
+\end{document}

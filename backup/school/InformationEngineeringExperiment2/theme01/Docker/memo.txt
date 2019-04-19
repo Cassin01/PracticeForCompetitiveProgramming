@@ -1,0 +1,2 @@
+listing.sty
+root@1a981038a756:/usr/share/texlive/texmf-dist/tex/latex/listing#

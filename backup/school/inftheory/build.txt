@@ -1,0 +1,1 @@
+input.md -o output.pdf -V documentclass=ltjarticle --pdf-engine=lualatex
