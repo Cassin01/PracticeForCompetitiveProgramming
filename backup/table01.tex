@@ -1,0 +1,49 @@
+﻿\listfiles
+\documentclass{jarticle}
+\usepackage{multirow}
+
+\begin{document}
+
+\begin{tabular}{ |cc||cccc|}
+\hline
+                         & & \multicolumn{4}{|c|}{Column} \\
+\hline
+\multicolumn{2}{|c||}{Row}      & 0 & 1 & 2 & 3  \\
+\hline
+\hline
+\multirow{4}{3pt}{$S_1$} & 0   & 1 & 8 & 14 & 7 \\
+                         & 1   & 1 & 0 & 15 & 7 \\
+                         & 2   & 6 &11 & 3  & 4 \\
+                         & 3   & 13&12 & 0  & 5 \\
+\hline
+\end{tabular}
+
+\begin{tabular}{ |cc||cccc|}
+\hline
+                         & & \multicolumn{4}{|c|}{Column} \\
+\hline
+\multicolumn{2}{|c||}{Row}      & 0 & 1 & 2 & 3  \\
+\hline
+\hline
+\multirow{4}{1in}{$S_1$} & 0   & 1 & 8 & 14 & 7 \\
+                         & 1   & 1 & 0 & 15 & 7 \\
+                         & 2   & 6 &11 & 3  & 4 \\
+                         & 3   & 13&12 & 0  & 5 \\
+\hline
+\end{tabular}
+
+\begin{tabular}{ |cc||cccc|}
+\hline
+                         & & \multicolumn{4}{|c|}{Column} \\
+\hline
+\multicolumn{2}{|c||}{Row}      & 0 & 1 & 2 & 3  \\
+\hline
+\hline
+\multirow{4}*{$S_1$} & 0   & 1 & 8 & 14 & 7 \\
+                         & 1   & 1 & 0 & 15 & 7 \\
+                         & 2   & 6 &11 & 3  & 4 \\
+                         & 3   & 13&12 & 0  & 5 \\
+\hline
+\end{tabular}
+
+\end{document}
