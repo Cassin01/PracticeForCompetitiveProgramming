@@ -1,2 +1,0 @@
-# ドッカーの中に入る
-docker exec -i -t コンテナ名 bash
