@@ -63,4 +63,41 @@ fn main() {
         s: chars,
         t: chars,
     }
+    let mut ass = Vec::new();
+    for i in 0..s.len() - t.len() + 1 {
+        let mut may_in = true;
+        for j in 0..t.len() {
+            if s[i + j] == t[j] || s[i + j] == '?' {
+            } else {
+                may_in = false;
+            }
+        }
+        if may_in == true {
+            let mut st = String::new();
+            for j in 0..i {
+                if s[j] == '?' {
+                    st.push('a');
+                } else {
+                    st.push(s[j]);
+                }
+            }
+            for j in 0..t.len() {
+                st.push(t[j])
+            }
+            for j in i + t.len()..s.len() {
+                if s[j] == '?' {
+                    st.push('a');
+                } else {
+                    st.push(s[j]);
+                }
+            }
+            ass.push(st);
+        }
+    }
+    if ass.is_empty() {
+        println!("UNRESTORABLE");
+    } else {
+        ass.sort();
+        println!("{}", ass[0]);
+    }
 }
