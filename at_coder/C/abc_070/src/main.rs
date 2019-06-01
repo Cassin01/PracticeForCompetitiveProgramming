@@ -59,27 +59,25 @@ macro_rules! read_value {
     };
 }
 
+fn gcd(a: u64, b: u64) -> u64 {
+    if b == 0 {
+        a
+    } else {
+        gcd(b, a % b)
+    }
+}
 
 fn main() {
     input! {
         n: usize,
-        a: [usize; n],
+        ts: [u64; n],
     }
-    let mut ms = HashMap::new();
-    for ai in a.iter() {
-        if ms.contains_key(&ai) {
-            let x = ms.get_mut(&ai).unwrap();
-            *x += 1;
-        } else {
-            ms.insert(ai, 1);
-        }
+    let mut ts = ts;
+    ts.sort();
+    ts.dedup();
+    let mut sum = 1;
+    for i in ts.into_iter() {
+        sum *= i / gcd(sum, i);
     }
-
-    let mut cnt = 0;
-    for (_, k) in ms {
-        if k % 2 == 1 {
-            cnt+=1;
-        }
-    }
-    println!("{}", cnt);
+    println!("{}", sum);
 }

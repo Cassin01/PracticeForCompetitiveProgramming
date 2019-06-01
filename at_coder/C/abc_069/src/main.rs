@@ -59,27 +59,26 @@ macro_rules! read_value {
     };
 }
 
-
 fn main() {
     input! {
         n: usize,
-        a: [usize; n],
+        a: [i64; n],
     }
-    let mut ms = HashMap::new();
-    for ai in a.iter() {
-        if ms.contains_key(&ai) {
-            let x = ms.get_mut(&ai).unwrap();
-            *x += 1;
-        } else {
-            ms.insert(ai, 1);
+    let mut two = 0;
+    let mut four = 0;
+    for i in a.iter() {
+        if i % 4 == 0 {
+            four += 1;
+        } else if i % 2 == 0 {
+            two += 1;
         }
     }
-
-    let mut cnt = 0;
-    for (_, k) in ms {
-        if k % 2 == 1 {
-            cnt+=1;
-        }
+    let no = n - four - two;
+    if no <= four {
+        println!("Yes");
+    } else if no <= four + 1 && two == 0 {
+        println!("Yes");
+    } else {
+        println!("No");
     }
-    println!("{}", cnt);
 }

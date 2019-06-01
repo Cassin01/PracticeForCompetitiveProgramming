@@ -59,27 +59,51 @@ macro_rules! read_value {
     };
 }
 
+struct UnionFind {
+    parent: Vec<usize>,
+}
+
+impl UnionFind {
+    fn new(n: usize) -> UnionFind {
+        UnionFind {
+            parent: (0..n).collect(),
+        }
+    }
+
+    fn find(&mut self, i: usize) -> usize {
+        if self.parent[i] == i {
+            return i;
+        }
+
+        let p = self.parent[i];
+        let p = self.find(p);
+        self.parent[i] = p;
+        p
+    }
+
+    fn unite(&mut self, i: usize, j: usize) {
+        let pi = self.find(i);
+        let pj = self.find(j);
+        self.parent[pi] = pj;
+    }
+}
 
 fn main() {
     input! {
         n: usize,
-        a: [usize; n],
+        q: usize,
+        pab: [(usize, usize, usize); q],
     }
-    let mut ms = HashMap::new();
-    for ai in a.iter() {
-        if ms.contains_key(&ai) {
-            let x = ms.get_mut(&ai).unwrap();
-            *x += 1;
+    let mut uf = UnionFind::new(n);
+    for p in pab.iter() {
+        if p.0 == 0 {
+            uf.unite(p.1, p.2);
         } else {
-            ms.insert(ai, 1);
+            if uf.find(p.1) == uf.find(p.2) {
+                println!("Yes");
+            } else {
+                println!("No");
+            }
         }
     }
-
-    let mut cnt = 0;
-    for (_, k) in ms {
-        if k % 2 == 1 {
-            cnt+=1;
-        }
-    }
-    println!("{}", cnt);
 }

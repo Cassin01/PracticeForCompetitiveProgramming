@@ -59,27 +59,35 @@ macro_rules! read_value {
     };
 }
 
+const BIG: usize = 1000000007;
+
+fn factrial(n: usize) -> usize {
+    let mut sum = 1;
+    for i in 1..n+1 {
+        sum *= i;
+        sum %= BIG;
+    }
+    sum
+}
+
+fn abs(a: usize, b: usize) -> usize {
+    if a > b {
+        a - b
+    } else {
+        b - a
+    }
+}
 
 fn main() {
     input! {
         n: usize,
-        a: [usize; n],
+        m: usize,
     }
-    let mut ms = HashMap::new();
-    for ai in a.iter() {
-        if ms.contains_key(&ai) {
-            let x = ms.get_mut(&ai).unwrap();
-            *x += 1;
-        } else {
-            ms.insert(ai, 1);
-        }
+    if n == m {
+        println!("{}", (factrial(n) * factrial(m) * 2) % BIG);
+    } else if abs(m, n) == 1 {
+        println!("{}", (factrial(n) * factrial(m)) % BIG);
+    } else {
+        println!("{}", 0);
     }
-
-    let mut cnt = 0;
-    for (_, k) in ms {
-        if k % 2 == 1 {
-            cnt+=1;
-        }
-    }
-    println!("{}", cnt);
 }

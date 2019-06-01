@@ -58,28 +58,34 @@ macro_rules! read_value {
         $iter.next().unwrap().parse::<$t>().expect("Parse error")
     };
 }
-
-
 fn main() {
     input! {
-        n: usize,
-        a: [usize; n],
+        h:  i64,
+        w: i64
     }
-    let mut ms = HashMap::new();
-    for ai in a.iter() {
-        if ms.contains_key(&ai) {
-            let x = ms.get_mut(&ai).unwrap();
-            *x += 1;
+    if h % 3  == 0 {
+        println!("0");
+    } else if w % 3 == 0 {
+        println!("0");
+    } else {
+        let mut  mi = std::i64::MAX;
+        if h > w {
+            let tmp = if h % 3 == 0 {0} else {1};
+            mi = std::cmp::min(mi, (tmp % 3) * w);
         } else {
-            ms.insert(ai, 1);
+            let tmp = if w % 3 == 0 {0} else {1};
+            mi = std::cmp::min(mi, (tmp % 3) * h);
         }
-    }
-
-    let mut cnt = 0;
-    for (_, k) in ms {
-        if k % 2 == 1 {
-            cnt+=1;
+        for i  in 1..h {
+            let v = vec![(h - i) * (w / 2), i * w, (h-i) * ((w + 2 - 1) / 2)];
+            mi = std::cmp::min(mi,
+                v.iter().max().unwrap() - v.iter().min().unwrap());
         }
+        for i  in 1..w {
+            let v = vec![(w - i) * (h / 2), i * h, (w - i) * ((h + 2 - 1) / 2)];
+            mi = std::cmp::min(mi,
+                v.iter().max().unwrap() - v.iter().min().unwrap());
+        }
+        println!("{}", mi);
     }
-    println!("{}", cnt);
 }

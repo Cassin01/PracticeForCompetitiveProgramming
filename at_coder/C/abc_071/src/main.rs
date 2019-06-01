@@ -59,27 +59,43 @@ macro_rules! read_value {
     };
 }
 
-
 fn main() {
     input! {
         n: usize,
-        a: [usize; n],
+        a: [i64; n],
     }
-    let mut ms = HashMap::new();
-    for ai in a.iter() {
-        if ms.contains_key(&ai) {
-            let x = ms.get_mut(&ai).unwrap();
+    let mut map = HashMap::new();
+    for i in a.into_iter() {
+        if map.contains_key(&i) {
+            let x = map.get_mut(&i).unwrap();
             *x += 1;
         } else {
-            ms.insert(ai, 1);
+            map.insert(i, 1);
         }
     }
-
-    let mut cnt = 0;
-    for (_, k) in ms {
-        if k % 2 == 1 {
-            cnt+=1;
+    let mut h = Vec::new();
+    for (k, v) in map.into_iter() {
+        if v >= 4 {
+            h.push(k);
+            h.push(k);
+        } else if v >= 2 {
+            h.push(k);
         }
     }
-    println!("{}", cnt);
+    if h.len() <= 1 {
+        println!("0");
+        return;
+    } else if h.len() == 2 {
+        println!("{}", h[0] * h[1]);
+        return;
+    }
+    let mut ma=h[0] * h[1];
+    for i in 0..h.len() {
+        for j in 0..h.len() {
+            if i != j {
+                ma = max(ma, h[i] * h[j]);
+            }
+        }
+    }
+    println!("{}", ma);
 }

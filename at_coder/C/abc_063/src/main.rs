@@ -1,11 +1,13 @@
 #![allow(unused_mut)]
 #![allow(non_snake_case)]
 #![allow(unused_imports)]
+
 use std::collections::HashSet;
 use std::collections::HashMap;
 use std::collections::BTreeSet;
 use std::collections::VecDeque;
 use std::cmp::{max, min};
+
 // https://qiita.com/tanakh/items/0ba42c7ca36cd29d0ac8
 #[allow(unused_macros)]
 macro_rules! input {
@@ -59,27 +61,30 @@ macro_rules! read_value {
     };
 }
 
-
 fn main() {
     input! {
         n: usize,
-        a: [usize; n],
+        ss: [i64; n],
     }
-    let mut ms = HashMap::new();
-    for ai in a.iter() {
-        if ms.contains_key(&ai) {
-            let x = ms.get_mut(&ai).unwrap();
-            *x += 1;
+    let s = ss.iter().fold(0, |sum, item| sum + item);
+    if s % 10 != 0 {
+        println!("{}", s);
+        return;
+    } else {
+        let mut f = false;
+        let mut ma = std::i64::MAX;
+        for i in ss.iter() {
+            if i % 10 != 0 {
+                f = true;
+                if i < &ma {
+                    ma = i.clone();
+                }
+            }
+        }
+        if !f {
+            println!("0");
         } else {
-            ms.insert(ai, 1);
+            println!("{}", s - ma);
         }
     }
-
-    let mut cnt = 0;
-    for (_, k) in ms {
-        if k % 2 == 1 {
-            cnt+=1;
-        }
-    }
-    println!("{}", cnt);
 }

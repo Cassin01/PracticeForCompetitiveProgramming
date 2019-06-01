@@ -59,27 +59,59 @@ macro_rules! read_value {
     };
 }
 
-
 fn main() {
     input! {
         n: usize,
-        a: [usize; n],
+        a: [i64; n],
     }
-    let mut ms = HashMap::new();
-    for ai in a.iter() {
-        if ms.contains_key(&ai) {
-            let x = ms.get_mut(&ai).unwrap();
-            *x += 1;
-        } else {
-            ms.insert(ai, 1);
-        }
+    let mut d = vec![0; 8];
+    let mut t = 0;
+    for i in a.into_iter() {
+    if 1    <= i && i <= 399 {
+        d[0]+=1;
+    } else if 400  <= i && i <= 799  {
+        d[1]+=1;
+
+    } else if 800  <= i && i <= 1199 {
+
+        d[2]+=1;
+
+    } else if 1200 <= i && i <= 1599 {
+
+        d[3]+=1;
+
+    } else if 1600 <= i && i <= 1999 {
+
+        d[4]+=1;
+
+    } else if 2000 <= i && i <= 2399 {
+
+        d[5]+=1;
+
+    } else if 2400 <= i && i <= 2799 {
+
+        d[6]+=1;
+
+    } else if 2800 <= i && i <= 3199 {
+        d[7]+=1;
+    } else {
+        t+=1;
     }
 
-    let mut cnt = 0;
-    for (_, k) in ms {
-        if k % 2 == 1 {
-            cnt+=1;
+    }
+    let mut ds = 0;
+    for i in d.into_iter() {
+        if i >= 1 {
+            ds+=1;
         }
     }
-    println!("{}", cnt);
+    if t != 0 {
+        if ds == 0 {
+            println!("{} {}", 1, t);
+        } else {
+            println!("{} {}", ds, ds + t);
+        }
+    } else {
+        println!("{} {}", ds, ds + t);
+    }
 }

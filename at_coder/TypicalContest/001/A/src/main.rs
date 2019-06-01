@@ -1,11 +1,13 @@
 #![allow(unused_mut)]
 #![allow(non_snake_case)]
 #![allow(unused_imports)]
+
 use std::collections::HashSet;
 use std::collections::HashMap;
 use std::collections::BTreeSet;
 use std::collections::VecDeque;
 use std::cmp::{max, min};
+
 // https://qiita.com/tanakh/items/0ba42c7ca36cd29d0ac8
 #[allow(unused_macros)]
 macro_rules! input {
@@ -59,27 +61,57 @@ macro_rules! read_value {
     };
 }
 
-
 fn main() {
     input! {
-        n: usize,
-        a: [usize; n],
+        h: usize,
+        w: usize,
+        cs: [chars; h],
     }
-    let mut ms = HashMap::new();
-    for ai in a.iter() {
-        if ms.contains_key(&ai) {
-            let x = ms.get_mut(&ai).unwrap();
-            *x += 1;
-        } else {
-            ms.insert(ai, 1);
+    let mut map = vec![vec!['#'; w+2]; h+2];
+    let mut ved = vec![vec![false; w+2]; h+2];
+    let mut s = (0, 0);
+    let mut g = (0, 0);
+    for j in 0..h {
+        for i in 0..w {
+            map[j+1][i+1] = cs[j][i];
+            if cs[j][i] == 's' {
+                s = (j+1, i+1);
+            } else if cs[j][i] == 'g' {
+                g = (j+1, i+1);
+            }
         }
     }
 
-    let mut cnt = 0;
-    for (_, k) in ms {
-        if k % 2 == 1 {
-            cnt+=1;
+    let mut stack = Vec::new();
+    stack.push(s);
+    let mut now = s;
+    ved[now.0][now.1] = true;
+    let ds = [(1, 0), (0, 1), (-1, 0), (0, -1)];
+
+    let mut flag = false;
+    while !stack.is_empty() {
+        now = stack.pop().unwrap();
+
+        if now == g {
+            flag = true;
+            break;
+        }
+
+        for d in ds.iter() {
+            let  y = (now.0 as i64 + d.0) as usize;
+            let  x = (now.1 as i64 + d.1) as usize;
+
+            if map[y][x] != '#' && !ved[y][x] {
+                stack.push((y, x));
+            }
+
+            ved[now.0][now.1] = true;
         }
     }
-    println!("{}", cnt);
+
+    if flag {
+        println!("Yes");
+    } else {
+        println!("No")
+    }
 }

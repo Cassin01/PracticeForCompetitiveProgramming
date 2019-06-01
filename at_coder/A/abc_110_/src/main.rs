@@ -59,27 +59,34 @@ macro_rules! read_value {
     };
 }
 
+fn ss(a:usize, b:usize) -> usize {
+    a * 10 + b
+}
 
 fn main() {
     input! {
-        n: usize,
-        a: [usize; n],
+        a: usize,
+        b: usize,
+        c: usize,
     }
-    let mut ms = HashMap::new();
-    for ai in a.iter() {
-        if ms.contains_key(&ai) {
-            let x = ms.get_mut(&ai).unwrap();
-            *x += 1;
-        } else {
-            ms.insert(ai, 1);
-        }
+    let mut max = 0;
+    if ss(a, b) + c > max {
+        max = ss(a ,b) + c;
     }
-
-    let mut cnt = 0;
-    for (_, k) in ms {
-        if k % 2 == 1 {
-            cnt+=1;
-        }
+    if ss(b, a) + c > max {
+        max = ss(b ,a) + c;
     }
-    println!("{}", cnt);
+    if ss(c, a) + b > max {
+        max = ss(c ,a) + b;
+    }
+    if ss(a, c) + b > max {
+        max = ss(a ,c) + b;
+    }
+    if ss(b, c) + a > max {
+        max = ss(b ,c) + a;
+    }
+    if ss(c, b) + a > max {
+        max = ss(c ,b) + a;
+    }
+    println!("{}", max);
 }

@@ -58,28 +58,47 @@ macro_rules! read_value {
         $iter.next().unwrap().parse::<$t>().expect("Parse error")
     };
 }
-
-
+use std::char;
 fn main() {
     input! {
         n: usize,
-        a: [usize; n],
+        a: [i64; n],
     }
-    let mut ms = HashMap::new();
-    for ai in a.iter() {
-        if ms.contains_key(&ai) {
-            let x = ms.get_mut(&ai).unwrap();
-            *x += 1;
-        } else {
-            ms.insert(ai, 1);
+    let mut ans = VecDeque::new();
+    if n % 2 == 0 {
+        for i in 0..a.len() {
+            if i % 2 == 0 {
+                ans.push_back(a[i]);
+            } else {
+                ans.push_front(a[i]);
+            }
         }
-    }
+    } else {
+        for i in 0..a.len() {
+            if i % 2 == 1 {
+                ans.push_back(a[i]);
+            } else {
+                ans.push_front(a[i]);
+            }
+        }
 
-    let mut cnt = 0;
-    for (_, k) in ms {
-        if k % 2 == 1 {
-            cnt+=1;
-        }
     }
-    println!("{}", cnt);
+    for i in 0..ans.len() {
+        print!("{} ", ans[i]);
+    }
+    /*
+    0 1 2 3 4 5
+
+    0
+
+    1 0
+
+    2 0 1
+
+    3 1 0 2
+
+    4 2 0 1 3
+
+    5 3 1 0 2 4
+    */
 }

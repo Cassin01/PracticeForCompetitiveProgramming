@@ -54,14 +54,14 @@ fn main() {
         n: usize,
         k: usize,
     }
-    a = n / k;
+    let mut a = n / k;
     if k % 2 == 1 {
         println!("{}", a.pow(3));
     } else {
-        let mut time = 0;
+        let mut time: usize = 0;
         for i in 2..n {
             if i % k == k / 2 { time+=1; }
         }
-        println!("{}", a.pow(3) + time.pow(3) )
+        println!("{}", a.pow(3) + time.pow(3 as u32) )
     }
 }

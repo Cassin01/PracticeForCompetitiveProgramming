@@ -59,27 +59,29 @@ macro_rules! read_value {
     };
 }
 
-
 fn main() {
     input! {
         n: usize,
         a: [usize; n],
     }
-    let mut ms = HashMap::new();
-    for ai in a.iter() {
-        if ms.contains_key(&ai) {
-            let x = ms.get_mut(&ai).unwrap();
-            *x += 1;
-        } else {
-            ms.insert(ai, 1);
-        }
+    let mut cnts = [0; 100002];
+    for i in a.into_iter() {
+        count(i, &mut cnts);
     }
+    let ans = cnts.into_iter().max().unwrap();
+    println!("{}", ans);
+}
 
-    let mut cnt = 0;
-    for (_, k) in ms {
-        if k % 2 == 1 {
-            cnt+=1;
-        }
+fn count(x: usize, cnts: &mut [usize]) {
+    if x == 0 {
+        cnts[x] += 1;
+        cnts[x+1] += 1;
+    } else if x == 100000 {
+        cnts[x-1] += 1;
+        cnts[x] += 1;
+    } else {
+        cnts[x] += 1;
+        cnts[x-1] += 1;
+        cnts[x+1] += 1;
     }
-    println!("{}", cnt);
 }

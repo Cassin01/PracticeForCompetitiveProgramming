@@ -59,27 +59,29 @@ macro_rules! read_value {
     };
 }
 
-
 fn main() {
     input! {
         n: usize,
-        a: [usize; n],
+        m: usize,
+        abs: [(usize1, usize1); m],
     }
-    let mut ms = HashMap::new();
-    for ai in a.iter() {
-        if ms.contains_key(&ai) {
-            let x = ms.get_mut(&ai).unwrap();
-            *x += 1;
-        } else {
-            ms.insert(ai, 1);
+    let mut islands = vec![0; n];
+    for ab in abs.into_iter() {
+        if ab.0 == 0 {
+            if islands[ab.1] == 2 {
+                println!("POSSIBLE");
+                return;
+            } else {
+                islands[ab.1] = 1;
+            }
+        } else if ab.1 == n - 1 {
+            if islands[ab.0] == 1 {
+                println!("POSSIBLE");
+                return;
+            } else {
+                islands[ab.0] = 2;
+            }
         }
     }
-
-    let mut cnt = 0;
-    for (_, k) in ms {
-        if k % 2 == 1 {
-            cnt+=1;
-        }
-    }
-    println!("{}", cnt);
+    println!("IMPOSSIBLE");
 }

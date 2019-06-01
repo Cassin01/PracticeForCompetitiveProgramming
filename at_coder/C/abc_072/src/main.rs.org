@@ -59,27 +59,62 @@ macro_rules! read_value {
     };
 }
 
-
 fn main() {
     input! {
         n: usize,
-        a: [usize; n],
+        a: [i64; n],
     }
+    if n == 1 {
+        println!("1");
+        return;
+    } else if n == 2 {
+        if a[0] + 1 == a[1] || a[0] - 1 == a[1] || a[0] == a[1] {
+            println!("2");
+        } else {
+            println!("1");
+        }
+        return;
+    } else if n == 3 {
+        if a[0] + 1 == a[1] || a[0] - 1 == a[1] || a[0] == a[1] {
+            println!("2");
+        } else {
+        }
+    }
+    let mut a = a;
     let mut ms = HashMap::new();
-    for ai in a.iter() {
-        if ms.contains_key(&ai) {
-            let x = ms.get_mut(&ai).unwrap();
+    for i in a.into_iter() {
+        if ms.contains_key(&i) {
+            let x= ms.get_mut(&i).unwrap();
             *x += 1;
         } else {
-            ms.insert(ai, 1);
+            ms.insert(i, 1_u64);
         }
     }
 
-    let mut cnt = 0;
-    for (_, k) in ms {
-        if k % 2 == 1 {
-            cnt+=1;
+    let mut vs = Vec::new();
+    for (k, v) in ms.iter() {
+        vs.push((k.clone(), v.clone()));
+    }
+    vs.sort_by_key(|c| c.0);
+
+    if vs[0].0 + 1 == vs[1].0 {
+        vs[0].1 += ms[&vs[1].0].clone();
+    }
+    for i in 1..vs.len() - 1 {
+        if vs[i].0 + 1 == vs[i + 1].0 {
+            vs[i].1 += ms[&vs[i + 1].0].clone();
+        }
+        if vs[i].0 - 1 == vs[i - 1].0 {
+            vs[i].1 += ms[&vs[i - 1].0].clone();
         }
     }
-    println!("{}", cnt);
+    let len = vs.len().clone();
+    if vs[len - 1].0 - 1 == vs[len - 2].0 {
+        vs[len - 1].1 += ms[&vs[len - 2].0].clone();
+    }
+    let mut ma = 1_u64;
+    for i in vs.into_iter() {
+        ma = std::cmp::max(i.1, ma);
+    }
+    println!("{}", ma);
 }
