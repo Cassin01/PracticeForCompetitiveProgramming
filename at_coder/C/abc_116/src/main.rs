@@ -1,3 +1,15 @@
+#![allow(unused_mut)]
+#![allow(non_snake_case)]
+#![allow(unused_imports)]
+
+use std::collections::HashSet;
+use std::collections::HashMap;
+use std::collections::BTreeSet;
+use std::collections::VecDeque;
+use std::cmp::{max, min};
+
+// https://qiita.com/tanakh/items/0ba42c7ca36cd29d0ac8
+#[allow(unused_macros)]
 macro_rules! input {
     (source = $s:expr, $($r:tt)*) => {
         let mut iter = $s.split_whitespace();
@@ -15,6 +27,7 @@ macro_rules! input {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! input_inner {
     ($iter:expr) => {};
     ($iter:expr, ) => {};
@@ -25,6 +38,7 @@ macro_rules! input_inner {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! read_value {
     ($iter:expr, ( $($t:tt),* )) => {
         ( $(read_value!($iter, $t)),* )
@@ -47,26 +61,50 @@ macro_rules! read_value {
     };
 }
 
-fn gcd_list(numbers: Vec<usize>) -> usize {
-    fn gcd(a: usize, b: usize) -> usize {
-        if b == 0 {
-            a
+fn dfs(mut h: Vec<i64>, r: usize, l: usize, dp: usize) -> i64 {
+    let mut az = true;
+    let mut u = r;
+    let mut vs = Vec::new();
+    for j in r..l {
+        h[j] -= 1;
+        if h[j] >= 0 {
+            az = false;
         } else {
-            gcd(b, a % b)
+        }
+        if h[j] > 0 {
+        } else {
+            vs.push((u, j));
+            u = j+1;
         }
     }
-    if let Some((&head, tail)) = numbers.split_first() {
-        // &b に注意
-        tail.iter().fold(head, |a,&b| gcd(a, b))
-    } else {
-        panic!("Can't unwrap!");
+    if az {
+        return 0;
     }
+
+    vs.push((u, l));
+
+    let mut cnt = 0;
+    for  v in vs {
+        //println!("{:?} dp{}", v, dp);
+        cnt += dfs(h.clone(), v.0, v.1, dp+1);
+    }
+    cnt + 1
 }
 
 fn main() {
     input! {
         n: usize,
-        a: [usize; n],
+        xs: [i64; n],
     }
-    println!("{}",gcd_list(a));
+    let mut res = 0;
+    for i in 0..n {
+        if i == 0 {
+            res += xs[i];
+        } else {
+            if xs[i-1] < xs[i] {
+                res += xs[i] - xs[i - 1];
+            }
+        }
+    }
+    println!("{}", res);
 }

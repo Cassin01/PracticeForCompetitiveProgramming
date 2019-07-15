@@ -1,0 +1,118 @@
+#![allow(unused_mut)]
+#![allow(non_snake_case)]
+#![allow(unused_imports)]
+use std::collections::HashSet;
+use std::collections::HashMap;
+use std::collections::BTreeSet;
+use std::collections::VecDeque;
+use std::cmp::{max, min};
+
+// https://qiita.com/tanakh/items/0ba42c7ca36cd29d0ac8
+#[allow(unused_macros)]
+macro_rules! input {
+    (source = $s:expr, $($r:tt)*) => {
+        let mut iter = $s.split_whitespace();
+        input_inner!{iter, $($r)*}
+    };
+    ($($r:tt)*) => {
+        let s = {
+            use std::io::Read;
+            let mut s = String::new();
+            std::io::stdin().read_to_string(&mut s).unwrap();
+            s
+        };
+        let mut iter = s.split_whitespace();
+        input_inner!{iter, $($r)*}
+    };
+}
+
+#[allow(unused_macros)]
+macro_rules! input_inner {
+    ($iter:expr) => {};
+    ($iter:expr, ) => {};
+
+    ($iter:expr, $var:ident : $t:tt $($r:tt)*) => {
+        let $var = read_value!($iter, $t);
+        input_inner!{$iter $($r)*}
+    };
+}
+
+#[allow(unused_macros)]
+macro_rules! read_value {
+    ($iter:expr, ( $($t:tt),* )) => {
+        ( $(read_value!($iter, $t)),* )
+    };
+
+    ($iter:expr, [ $t:tt ; $len:expr ]) => {
+        (0..$len).map(|_| read_value!($iter, $t)).collect::<Vec<_>>()
+    };
+
+    ($iter:expr, chars) => {
+        read_value!($iter, String).chars().collect::<Vec<char>>()
+    };
+
+    ($iter:expr, usize1) => {
+        read_value!($iter, usize) - 1
+    };
+
+    ($iter:expr, $t:ty) => {
+        $iter.next().unwrap().parse::<$t>().expect("Parse error")
+    };
+}
+
+fn  all_used(used: &Vec<bool>) -> bool {
+    for i in used {
+        if !i {
+            return false
+        }
+    }
+    true
+}
+
+fn dfs(a: usize, mut used: Vec<bool>, hm: HashMap<usize, HashSet<usize>>) -> i64 {
+    if all_used(&used) {
+        return 1;
+    }
+    let mut sum = 0;
+    for hs in hm[&a].clone() {
+        if used[hs] {
+            continue;
+        } else {
+            used[hs] = true;
+            sum += dfs(hs, used.clone(), hm.clone());
+            used[hs] = false;
+        }
+    }
+    sum
+}
+
+fn main() {
+    input! {
+        n: usize,
+        m: usize,
+        abs: [(usize1, usize1); m],
+    }
+    let mut hms = HashMap::new();
+    for ab in abs {
+        if hms.contains_key(&ab.0) {
+            let hs: &mut HashSet<usize> = hms.get_mut(&ab.0).unwrap();
+            hs.insert(ab.1);
+        } else {
+            let mut hs = HashSet::new();
+            hs.insert(ab.1);
+            hms.insert(ab.0, hs);
+        }
+        if hms.contains_key(&ab.1) {
+            let hs: &mut HashSet<usize> = hms.get_mut(&ab.1).unwrap();
+            hs.insert(ab.0);
+        } else {
+            let mut hs = HashSet::new();
+            hs.insert(ab.0);
+            hms.insert(ab.1, hs);
+        }
+    }
+    //println!("{:?}", hms);
+    let mut used = vec![false; n];
+    let x = dfs(1, used, hms);
+    println!("{:?}", x);
+}

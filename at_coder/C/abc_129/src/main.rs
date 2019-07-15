@@ -1,3 +1,13 @@
+#![allow(unused_mut)]
+#![allow(non_snake_case)]
+#![allow(unused_imports)]
+use std::collections::HashSet;
+use std::collections::HashMap;
+use std::collections::BTreeSet;
+use std::collections::VecDeque;
+use std::cmp::{max, min};
+// https://qiita.com/tanakh/items/0ba42c7ca36cd29d0ac8
+#[allow(unused_macros)]
 macro_rules! input {
     (source = $s:expr, $($r:tt)*) => {
         let mut iter = $s.split_whitespace();
@@ -15,6 +25,7 @@ macro_rules! input {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! input_inner {
     ($iter:expr) => {};
     ($iter:expr, ) => {};
@@ -25,6 +36,7 @@ macro_rules! input_inner {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! read_value {
     ($iter:expr, ( $($t:tt),* )) => {
         ( $(read_value!($iter, $t)),* )
@@ -46,27 +58,27 @@ macro_rules! read_value {
         $iter.next().unwrap().parse::<$t>().expect("Parse error")
     };
 }
-
-fn gcd_list(numbers: Vec<usize>) -> usize {
-    fn gcd(a: usize, b: usize) -> usize {
-        if b == 0 {
-            a
-        } else {
-            gcd(b, a % b)
-        }
-    }
-    if let Some((&head, tail)) = numbers.split_first() {
-        // &b に注意
-        tail.iter().fold(head, |a,&b| gcd(a, b))
-    } else {
-        panic!("Can't unwrap!");
-    }
-}
-
 fn main() {
     input! {
         n: usize,
-        a: [usize; n],
+        m: usize,
+        a: [usize; m],
     }
-    println!("{}",gcd_list(a));
+    let mut md = 1_000_000_007;
+    let mut dp = vec![0;n+3];
+    let mut st = vec![true;n+3];
+    for i in a {
+        st[i] = false;
+    }
+    dp[0] = 1;
+    if st[1] {
+        dp[1] = 1;
+    }
+    for i in 2..n + 2{
+        if st[i] {
+            dp[i] = (dp[i-1] + dp[i-2]) % md;
+        } else {
+        }
+    }
+    println!("{}", dp[n] % md);
 }

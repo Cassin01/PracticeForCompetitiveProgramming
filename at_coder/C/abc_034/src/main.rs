@@ -1,3 +1,15 @@
+#![allow(unused_mut)]
+#![allow(non_snake_case)]
+#![allow(unused_imports)]
+
+use std::collections::HashSet;
+use std::collections::HashMap;
+use std::collections::BTreeSet;
+use std::collections::VecDeque;
+use std::cmp::{max, min};
+
+// https://qiita.com/tanakh/items/0ba42c7ca36cd29d0ac8
+#[allow(unused_macros)]
 macro_rules! input {
     (source = $s:expr, $($r:tt)*) => {
         let mut iter = $s.split_whitespace();
@@ -15,6 +27,7 @@ macro_rules! input {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! input_inner {
     ($iter:expr) => {};
     ($iter:expr, ) => {};
@@ -25,6 +38,7 @@ macro_rules! input_inner {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! read_value {
     ($iter:expr, ( $($t:tt),* )) => {
         ( $(read_value!($iter, $t)),* )
@@ -47,26 +61,48 @@ macro_rules! read_value {
     };
 }
 
-fn gcd_list(numbers: Vec<usize>) -> usize {
-    fn gcd(a: usize, b: usize) -> usize {
-        if b == 0 {
-            a
-        } else {
-            gcd(b, a % b)
-        }
+fn mod_pow(mut a: usize, mut n: usize, m: usize) -> usize {
+    let mut res: usize = 1;
+    while n > 0 {
+            if n & 1 == 1 {
+                    res = res * a % m;
+                }
+            a = a * a % m;
+            n >>= 1;
     }
-    if let Some((&head, tail)) = numbers.split_first() {
-        // &b に注意
-        tail.iter().fold(head, |a,&b| gcd(a, b))
+    res
+}
+
+fn mod_pow2(a: usize, b: usize, m: usize) -> usize {
+    if b == 0  {
+        1
+    } else if b % 2 == 0 {
+        let d = mod_pow2(a, b/2, m);
+        (d * d) % m
     } else {
-        panic!("Can't unwrap!");
+        (a * mod_pow2(a, b-1, m)) % m
     }
 }
 
 fn main() {
     input! {
-        n: usize,
-        a: [usize; n],
+        w: usize ,
+        h: usize
     }
-    println!("{}",gcd_list(a));
+    let m:usize = 1000_000_007;
+
+    let sum = w + h - 2;
+
+    let wi = w-1;
+    let hi = h-1;
+    let mut s1 = 1;
+    for i in wi+1..sum+1 {
+        s1 *= i;
+        s1 %= m;
+    }
+    for i in 1..hi+1 {
+        s1 *= mod_pow2(i, m-2, m) % m;
+        s1 %= m;
+    }
+    println!("{}",  s1 % m);
 }

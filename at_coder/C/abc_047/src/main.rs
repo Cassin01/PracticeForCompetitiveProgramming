@@ -1,3 +1,14 @@
+#![allow(unused_mut)]
+#![allow(non_snake_case)]
+#![allow(unused_imports)]
+use std::collections::HashSet;
+use std::collections::HashMap;
+use std::collections::BTreeSet;
+use std::collections::VecDeque;
+use std::cmp::{max, min};
+
+// https://qiita.com/tanakh/items/0ba42c7ca36cd29d0ac8
+#[allow(unused_macros)]
 macro_rules! input {
     (source = $s:expr, $($r:tt)*) => {
         let mut iter = $s.split_whitespace();
@@ -15,6 +26,7 @@ macro_rules! input {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! input_inner {
     ($iter:expr) => {};
     ($iter:expr, ) => {};
@@ -25,6 +37,7 @@ macro_rules! input_inner {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! read_value {
     ($iter:expr, ( $($t:tt),* )) => {
         ( $(read_value!($iter, $t)),* )
@@ -47,26 +60,46 @@ macro_rules! read_value {
     };
 }
 
-fn gcd_list(numbers: Vec<usize>) -> usize {
-    fn gcd(a: usize, b: usize) -> usize {
-        if b == 0 {
-            a
-        } else {
-            gcd(b, a % b)
-        }
-    }
-    if let Some((&head, tail)) = numbers.split_first() {
-        // &b に注意
-        tail.iter().fold(head, |a,&b| gcd(a, b))
-    } else {
-        panic!("Can't unwrap!");
-    }
-}
-
 fn main() {
     input! {
-        n: usize,
-        a: [usize; n],
+        ss: chars,
     }
-    println!("{}",gcd_list(a));
+    let mut ret = 0;
+    let mut b = false;
+    let mut no_w = true;
+    for i in 0..ss.len() {
+        if ss[i] == 'B' {
+            if b {
+            } else {
+                b = true;
+                ret+=1;
+            }
+        } else {
+            no_w = false;
+            b = false;
+        }
+    }
+    let mut si = 0;
+    let len = ss.len();
+    if ret > 1 {
+        if ss[0] == 'B' {
+            si += 1;
+        }
+        if ss[(len - 1) as usize] == 'B' {
+            si += 1;
+        }
+    } else {
+        if ss[0] == 'B' || ss[(len - 1) as usize] == 'B' {
+            si += 1;
+        }
+    }
+    if no_w {
+        println!("{}", 0);
+        return;
+    }
+    if ret == 0 {
+        println!("0");
+        return;
+    }
+    println!("{}", ret * 2 - si);
 }

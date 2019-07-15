@@ -1,3 +1,15 @@
+#![allow(unused_mut)]
+#![allow(non_snake_case)]
+#![allow(unused_imports)]
+
+use std::collections::HashSet;
+use std::collections::HashMap;
+use std::collections::BTreeSet;
+use std::collections::VecDeque;
+use std::cmp::{max, min};
+
+// https://qiita.com/tanakh/items/0ba42c7ca36cd29d0ac8
+#[allow(unused_macros)]
 macro_rules! input {
     (source = $s:expr, $($r:tt)*) => {
         let mut iter = $s.split_whitespace();
@@ -15,6 +27,7 @@ macro_rules! input {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! input_inner {
     ($iter:expr) => {};
     ($iter:expr, ) => {};
@@ -25,6 +38,7 @@ macro_rules! input_inner {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! read_value {
     ($iter:expr, ( $($t:tt),* )) => {
         ( $(read_value!($iter, $t)),* )
@@ -47,26 +61,40 @@ macro_rules! read_value {
     };
 }
 
-fn gcd_list(numbers: Vec<usize>) -> usize {
-    fn gcd(a: usize, b: usize) -> usize {
-        if b == 0 {
-            a
+fn dfs(i: i64, time: i64, n: i64) -> i64 {
+    if 2 * i > n && 2 * i + 1 > n {
+        time
+    } else {
+        let x = dfs(2 * i + 1, time + 1, n);
+        let y = dfs(2 * i, time + 1, n);
+        if x > y {
+            y
         } else {
-            gcd(b, a % b)
+            x
         }
     }
-    if let Some((&head, tail)) = numbers.split_first() {
-        // &b に注意
-        tail.iter().fold(head, |a,&b| gcd(a, b))
-    } else {
-        panic!("Can't unwrap!");
-    }
+
 }
 
 fn main() {
     input! {
-        n: usize,
-        a: [usize; n],
+        n: i64,
     }
-    println!("{}",gcd_list(a));
+    let mut m = n;
+    let mut depth = 0;
+    while m > 0 {
+        depth += 1;
+        m /= 2;
+    }
+    let mut m = 1;
+    let mut d = 1;
+    while m <= n {
+        if (depth % 2 == 0 && d % 2 == 0) || (depth % 2 == 1 && d % 2 == 1) {
+            m = 2 * m + 1;
+        } else {
+            m *= 2;
+        }
+        d += 1;
+    }
+    println!("{}", if d % 2 == 0 {"Aoki"} else {"Takahashi"});
 }
