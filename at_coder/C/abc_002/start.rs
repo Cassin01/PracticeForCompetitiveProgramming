@@ -1,3 +1,11 @@
+#![allow(unused_mut)]
+#![allow(non_snake_case)]
+#![allow(unused_imports)]
+use std::collections::HashSet;
+use std::collections::HashMap;
+use std::collections::BTreeSet;
+use std::cmp::{max, min};
+#[allow(unused_macros)]
 macro_rules! input {
     (source = $s:expr, $($r:tt)*) => {
         let mut iter = $s.split_whitespace();
@@ -14,7 +22,9 @@ macro_rules! input {
         input_inner!{iter, $($r)*}
     };
 }
+//ljfa
 
+#[allow(unused_macros)]
 macro_rules! input_inner {
     ($iter:expr) => {};
     ($iter:expr, ) => {};
@@ -25,6 +35,7 @@ macro_rules! input_inner {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! read_value {
     ($iter:expr, ( $($t:tt),* )) => {
         ( $(read_value!($iter, $t)),* )
@@ -46,13 +57,10 @@ macro_rules! read_value {
         $iter.next().unwrap().parse::<$t>().expect("Parse error")
     };
 }
-
 fn main() {
     input! {
-        _n: i64,
-        m: i64,
-        x: i64,
-        a: [i64; m],
+        N: i64,
+        A: [i64; N],
     }
-
 }
+

@@ -1,3 +1,13 @@
+#![allow(unused_mut)]
+#![allow(non_snake_case)]
+#![allow(unused_imports)]
+use std::collections::HashSet;
+use std::collections::HashMap;
+use std::collections::BTreeSet;
+use std::collections::VecDeque;
+use std::cmp::{max, min};
+// https://qiita.com/tanakh/items/0ba42c7ca36cd29d0ac8
+#[allow(unused_macros)]
 macro_rules! input {
     (source = $s:expr, $($r:tt)*) => {
         let mut iter = $s.split_whitespace();
@@ -15,6 +25,7 @@ macro_rules! input {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! input_inner {
     ($iter:expr) => {};
     ($iter:expr, ) => {};
@@ -25,6 +36,7 @@ macro_rules! input_inner {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! read_value {
     ($iter:expr, ( $($t:tt),* )) => {
         ( $(read_value!($iter, $t)),* )
@@ -49,10 +61,30 @@ macro_rules! read_value {
 
 fn main() {
     input! {
-        _n: i64,
-        m: i64,
-        x: i64,
-        a: [i64; m],
+        n: usize,
+        m: usize,
+        ab: [(usize1, usize1); m]
+    }
+    let mut v = vec![vec![]; n];
+    for &(a, b) in &ab {
+        v[a].push(b);
+        v[b].push(a);
     }
 
+    for i in 0..n {
+        let mut u = vec![false; n];
+        // 友達の友達
+        for &j in &v[i] {
+            for &k in &v[j] {
+                u[k] = true;
+            }
+        }
+        // 友達
+        for &j in &v[i] {
+            u[j] = false;
+        }
+        // 自分自身
+        u[i] = false;
+        println!("{}", u.iter().filter(|&&b| b).count());
+    }
 }

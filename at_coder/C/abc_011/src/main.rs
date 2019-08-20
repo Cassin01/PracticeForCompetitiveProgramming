@@ -1,3 +1,13 @@
+#![allow(unused_mut)]
+#![allow(non_snake_case)]
+#![allow(unused_imports)]
+use std::collections::HashSet;
+use std::collections::HashMap;
+use std::collections::BTreeSet;
+use std::collections::VecDeque;
+use std::cmp::{max, min};
+// https://qiita.com/tanakh/items/0ba42c7ca36cd29d0ac8
+#[allow(unused_macros)]
 macro_rules! input {
     (source = $s:expr, $($r:tt)*) => {
         let mut iter = $s.split_whitespace();
@@ -15,6 +25,7 @@ macro_rules! input {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! input_inner {
     ($iter:expr) => {};
     ($iter:expr, ) => {};
@@ -25,6 +36,7 @@ macro_rules! input_inner {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! read_value {
     ($iter:expr, ( $($t:tt),* )) => {
         ( $(read_value!($iter, $t)),* )
@@ -46,13 +58,26 @@ macro_rules! read_value {
         $iter.next().unwrap().parse::<$t>().expect("Parse error")
     };
 }
-
 fn main() {
     input! {
-        _n: i64,
-        m: i64,
-        x: i64,
-        a: [i64; m],
+        n: i64,
+        ngs: [i64; 3],
     }
-
+    let mut n = n;
+    for &i in &ngs {
+        if n == i {
+            println!("NO");
+            return;
+        }
+    }
+    for _ in 0..100 {
+        for i in (1..3+1).rev() {
+            if ngs.contains(&(n-i)) {
+                continue;
+            }
+            n = n - i;
+            break;
+        }
+    }
+    println!("{}", if n <= 0 {"YES"} else {"NO"});
 }

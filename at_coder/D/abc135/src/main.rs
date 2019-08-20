@@ -1,3 +1,5 @@
+// https://qiita.com/tanakh/items/0ba42c7ca36cd29d0ac8
+#[allow(unused_macros)]
 macro_rules! input {
     (source = $s:expr, $($r:tt)*) => {
         let mut iter = $s.split_whitespace();
@@ -15,6 +17,7 @@ macro_rules! input {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! input_inner {
     ($iter:expr) => {};
     ($iter:expr, ) => {};
@@ -25,6 +28,7 @@ macro_rules! input_inner {
     };
 }
 
+#[allow(unused_macros)]
 macro_rules! read_value {
     ($iter:expr, ( $($t:tt),* )) => {
         ( $(read_value!($iter, $t)),* )
@@ -46,13 +50,36 @@ macro_rules! read_value {
         $iter.next().unwrap().parse::<$t>().expect("Parse error")
     };
 }
-
 fn main() {
     input! {
-        _n: i64,
-        m: i64,
-        x: i64,
-        a: [i64; m],
+        s: chars
     }
+    let n = 13;
+    let mut dp = vec![0; n];
+    dp[0] = 1;
+    let md = 1000_000_000 + 7;
 
+    let mut mul = 1;
+    for i in (0..s.len()).rev() {
+        let mut next_dp = vec![0; n];
+        let c = s[i];
+        if c == '?' {
+            for k in 0..10 {
+                for j in 0..n {
+                    next_dp[(k * mul +j) % n] += dp[j];
+                    next_dp[(k * mul +j) % n] %= md;
+                }
+            }
+        } else {
+            let k = c.to_digit(10).unwrap() as usize;
+            for j in 0..n {
+                next_dp[(k * mul +j) % n] += dp[j];
+                next_dp[(k * mul +j) % n] %= md;
+            }
+        }
+        mul *= 10;
+        mul %= n;
+        dp = next_dp;
+    }
+    println!("{}",  dp[5]);
 }
